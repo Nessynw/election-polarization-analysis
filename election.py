@@ -6,7 +6,7 @@ m : nombre de candidats
 polarization : degré de polarisation (0.0 à 1.0)
 r : générateur aléatoire numpy
 '''
-def generale_profile(n: int, m: int, polarization: float = 0.0, r=None):
+def generate_profile(n: int, m: int, polarization: float = 0.0, r=None):
     if r is None:
         r = np.random.default_rng()
     a = r.integers(0, 2, size=m)
@@ -17,7 +17,7 @@ def generale_profile(n: int, m: int, polarization: float = 0.0, r=None):
         ref = a if i < n // 2 else a_op
         noise = r.random(m) < bruit        # n → noise
         profile[i] = np.where(noise, 1 - ref, ref)
-    return profile
+    return profile # profil de votantes (n, m) avec des votes binaires (0 ou 1)
 
 # Example usage:
 if __name__ == "__main__":
