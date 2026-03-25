@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.optimize import linear_sum_assignment
+import matplotlib.pyplot as plt
 #qst 1 : génération aléatoire d'un profil de votantes par approbation
 '''
 chaque votante exprime ses préférences en approuvant (1) ou non (0)
@@ -119,3 +120,31 @@ print(u1ParApprobation(profilApprobations))
 
 profilOrdresTotaux=np.array([[1,3,2,4],[1,2,3,4],[4,1,2,3],[1,2,3,4]])
 print(u1ParOrdresTotaux(profilOrdresTotaux))
+
+
+#question 14
+def phiParApprobation(profil):
+    n=len(profil)
+    m=len(profil[0])
+    phi=2/(n*m)*(u1ParApprobation(profil)-u2ParApprobation(profil))
+    return phi
+
+def phiParOrdresTotaux(profil):
+    n=len(profil)
+    m=len(profil[0])
+    phi=4/(n*m*m)*(u1ParApprobation(profil)-u2ParApprobation(profil))
+    return phi
+
+#question 15
+def phiEvolution(n,m):
+    polar=[0,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,1] 
+    phiA=[]
+    phiL=[]
+    for i in range(len(polar)):
+        profilA=generate_profile(n,m,polar[i])
+        profilL=generate_rank_profile(n,m,polar[i])
+        phiA.append(phiParApprobation(profilA))
+        phiL.append(phiParOrdresTotaux(profilL))
+    plt.plot(polar,phiA)
+    plt.plot(polar,phiL)
+

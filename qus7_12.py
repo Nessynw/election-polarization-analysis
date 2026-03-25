@@ -51,3 +51,15 @@ print(u1ParApprobation(profilApprobations))
 
 profilOrdresTotaux=np.array([[1,3,2,4],[1,2,3,4],[4,1,2,3],[1,2,3,4]])
 print(u1ParOrdresTotaux(profilOrdresTotaux))
+
+def phiParApprobation(profil):
+    n=len(profil)
+    m=len(profil[0])
+    phi=2/(n*m)*(u1ParApprobation(profil)-u2ParApprobation(profil))
+    return phi
+
+def phiParOrdresTotaux(profil):
+    n=len(profil)
+    m=len(profil[0])
+    phi=4/(n*m*m)*(u1ParApprobation(profil)-u2ParApprobation(profil))
+    return phi
