@@ -136,6 +136,7 @@ def plot_phi2_evolution(n: int, m: int, nb_runs: int = 20, seed: int = 42):
     plt.savefig("phi2_evolution.png", dpi=150)
     print("Figure sauvegardée : phi2_evolution.png")
     plt.show()
+
 # Question 8 : distances hamming et Spearman
 def hamming(a, b):
     if len(a) != len(b):
@@ -151,7 +152,7 @@ def spearman(a, b):
 def u1_approval(profile : np.ndarray) -> np.ndarray:
     n, m = profile.shape
     consensus = np.zeros(m, dtype=int)
-    nb_ones = np.sum(profile, axis=0)
+    nb_ones = np.sum(profile, axis=0) #on somme chaque colonne
     consensus[nb_ones > n / 2] = 1
     return consensus
 
@@ -177,6 +178,7 @@ def cost_u1_ranking(profile: np.ndarray) -> int:
     """Retourne la valeur optimale u*₁(p) pour des votes par ordres totaux."""
     consensus = u1_ranking(profile)
     return int(sum(spearman(profile[i], consensus) for i in range(len(profile))))
+
 # Question 13 : u*2 estimé par k-means (k=2)
 def consensus_approval(cluster : list) -> np.ndarray:
     if  not cluster:
@@ -302,15 +304,15 @@ def plot_phi_distance_evolution(n: int, m: int, n_runs: int = 10, nb_runs: int =
         phi_dS_means.append(np.mean(vals_dS))
         phi_dS_stds.append(np.std(vals_dS))
 
-    phi_dH_means = np.array(phi_dH_means)
-    phi_dH_stds  = np.array(phi_dH_stds)
+    phi_dH_means = np.array(phi_dH_means) #moyennes pour phi_dH
+    phi_dH_stds  = np.array(phi_dH_stds) #ecarts-types
     phi_dS_means = np.array(phi_dS_means)
     phi_dS_stds  = np.array(phi_dS_stds)
 
     plt.figure(figsize=(9, 5))
-    plt.plot(polar_values, phi_dH_means, marker='o', color='steelblue', label="φ_dH (approbation)")
+    plt.plot(polar_values, phi_dH_means, marker='o', color='steelblue', label="φ_dH (approbation)") #courbe des moyennes de phi
     plt.fill_between(polar_values, phi_dH_means - phi_dH_stds, phi_dH_means + phi_dH_stds,
-                     alpha=0.2, color='steelblue')
+                     alpha=0.2, color='steelblue') #construction de l'intervalle d'ecart-type
     plt.plot(polar_values, phi_dS_means, marker='s', color='orange', label="φ_dS (ordres totaux)")
     plt.fill_between(polar_values, phi_dS_means - phi_dS_stds, phi_dS_means + phi_dS_stds,
                      alpha=0.2, color='orange')
